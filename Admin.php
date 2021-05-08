@@ -24,7 +24,7 @@ class Admin {
         $usuariosPermitidos = Admin::all();
         foreach ($usuariosPermitidos as $usuarioPermitido) {
             if ($usuario == $usuarioPermitido->usuario && $senha == $usuarioPermitido->senha) {
-                header("location: grade.php");
+                return true;
             } else {
                 header("location: index.php");
             }

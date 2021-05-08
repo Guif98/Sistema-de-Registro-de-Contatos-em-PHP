@@ -6,6 +6,11 @@ class AdminController extends Controller {
         $usuario = $_POST['usuario'];
         $senha = $_POST['senha'];
 
-        Admin::validar($usuario, $senha);
+        $contatos = Contato::all();
+
+       if (Admin::validar($usuario, $senha)) {
+           return $this->view('grade', ['contatos' => $contatos]);
+       }
+
     }
 }
