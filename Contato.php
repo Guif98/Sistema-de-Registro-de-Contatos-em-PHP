@@ -29,10 +29,10 @@ class Contato {
         else {
             foreach ($colunas as $key => $value) {
                 if ($key !== 'id') {
-                    $definir[] = "{key}={value}";
+                    $definir[] = "{$key}={$value}";
                 }
             }
-            $query = "UPDATE contatos SET" . implode(',' , $definir);
+            $query = "UPDATE contatos SET " . implode(',' , $definir) . " WHERE id='{$this->id}';";
         } 
         if ($conexao = Conexao::getInstance()) {
             $stmt = $conexao->prepare($query);
@@ -40,6 +40,7 @@ class Contato {
                 return $stmt->rowCount();
             }
         }
+        return false;
     }
 
 
@@ -72,5 +73,59 @@ class Contato {
         return $resultado;
     }
 
+    /**RETORNA TODOS OS OBJETOS DA CLASSE CONTATOS*/
+    public static function all() {
+
+        $conexao = Conexao::getInstance();
+        $stmt = $conexao->prepare("SELECT * FROM contatos");
+        $result = array();
+
+        if ($stmt->execute()){
+            while($rs = $stmt->fetchObject(Contato::class)) {
+                $result[] = $rs;
+            } 
+        }
+        if (count($result) > 0) {
+            return $result;
+        }
+        return false;
+    }
+
+
+
+    /**RETORNA O NÚMERO DE REGISTROS DA TABLE */
+    public static function count() {
+
+        $conexao = Conexao::getInstance();
+        $count = $conexao->exec("SELECT count(*) FROM contatos;");
+        if ($count) {
+            return (int) count;
+        } 
+        return false;
+    }
+
+    public static function find($id) {
+
+        $conexao = Conexao::getInstance();
+        $stmt = $conexao->prepare("SELECT * FROM contatos WHERE id='{$id}';");
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() > 0) {
+                $resultado = $stmt->fetchObject('Contato');
+                if ($resultado) {
+                    return $resultado;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function destroy($id) {
+
+        $conexao = Conexao::getInstance();
+        if ($conexao->exec("DELETE FROM contatos WHERE id='{$id}';")) {
+            return true;
+        }
+        return false;
+    }
 
 }
