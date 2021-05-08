@@ -1,3 +1,11 @@
+<?php 
+
+if ($_SESSION['auth'] != true) {
+    header('location: index.php');
+}
+
+?>
+
 <div class="container">
     <form action="?controller=ContatosController&<?php echo isset($contato->id) ? "method=atualizar&id={$contato->id}": "method=salvar";?>" method="post">
         <div class="card" style="top: 40px">

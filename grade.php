@@ -1,4 +1,16 @@
+<?php defined('crud_mvc') or die; 
+
+
+if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0 && ($usuario) == $_SESSION['usuario_logado']) {
+
+} else {
+    (new AdminController())->formularioLogin();
+    exit;
+}
+?>
+
 <h1>Contatos</h1>
+<a href="?controller=AdminController&method=sair" class="btn btn-danger">Sair</a>
 <hr>
 <div class="container">
     <table class="table table-bordered table-striped" style="top: 40px">
@@ -23,9 +35,7 @@
                     </tr>
                 <?php } 
                 } else { ?>
-                    <tr>
-                        <td colspan="5">Nenhum registro encontrado</td>
-                    </tr>
+                   
                <?php } ?>
         </tbody>
     </table>

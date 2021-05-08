@@ -1,5 +1,12 @@
 <?php
 
+session_name('crud_mvc');
+session_start();
+
+header('Content-Type: text/html; charset=utf-8');
+define('crud_mvc', true);
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
@@ -42,21 +49,8 @@ spl_autoload_register(function ($class){
                 echo "Controller não encontrado!";
             }
         } else {
-            echo '<h1>Contatos</h1><hr><div class="container">';
-            echo 'Bem-vindo ao aplicativo MVC Contatos! <br /><br />';
-            ?>
-            <form action="?controller=AdminController&method=logar" method="post">
-            <div class="mt-3">
-                <label for="usuario">Usuário:</label>
-                <input class="form-control" type="text" name="usuario" id="usuario"/>
-            </div>
-            <div class="mt-3">
-                <label for="senha">Senha:</label>
-                <input class="form-control" type="password" name="senha" id="senha"/>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Logar</button>                
-            </form>
-       <?php }
+            (new AdminController())->formularioLogin();
+        }
     ?>
 </body>
 </html>
