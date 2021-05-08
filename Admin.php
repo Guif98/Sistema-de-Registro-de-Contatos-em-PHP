@@ -20,13 +20,14 @@ class Admin {
         return false;
     }
 
-    public function validar($usuario, $senha) {
+    public static function validar($usuario, $senha) {
         $usuariosPermitidos = Admin::all();
         foreach ($usuariosPermitidos as $usuarioPermitido) {
             if ($usuario == $usuarioPermitido->usuario && $senha == $usuarioPermitido->senha) {
-                return view('grade');
+                header("location: grade.php");
+            } else {
+                header("location: index.php");
             }
-            return false;
         }
     }
 }

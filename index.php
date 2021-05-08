@@ -45,7 +45,7 @@ spl_autoload_register(function ($class){
             echo '<h1>Contatos</h1><hr><div class="container">';
             echo 'Bem-vindo ao aplicativo MVC Contatos! <br /><br />';
             ?>
-            <form action="">
+            <form action="?controller=AdminController&method=logar" method="post">
             <div class="mt-3">
                 <label for="usuario">Usuário:</label>
                 <input class="form-control" type="text" name="usuario" id="usuario"/>
