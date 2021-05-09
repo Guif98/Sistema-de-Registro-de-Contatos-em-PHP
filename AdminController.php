@@ -36,21 +36,9 @@ class AdminController extends Controller
             return false;
         }
         
-        $admin = new Admin();
-        $usuarios = $admin->findAllUsuariosPermitidos();
-        $cpfs = array();
-
-        foreach($usuarios as $usuario) {
-            if(is_null($usuario->desativado))
-                $cpfs[] = $usuario->usuario;
+        if (Admin::authPortal($usuario, $senha)) {
+            return true;
         }
-
-        
-        if(!in_array($usuario, $cpfs)) {
-            return false;
-        }
-
-        return true;
     }
 
     public function status() {
@@ -81,8 +69,6 @@ class AdminController extends Controller
 
     public function logar()
     {
-        print_r($_POST);
-
         if(!isset($_SESSION['t_k_u_form_hidden'])) return $this->view('erro', ['msg' => 'Erro, favor voltar a página inicial e atualizar a página!']);
 
         $hidden = (strlen($_SESSION['t_k_u_form_hidden']) > 0) ? $_SESSION['t_k_u_form_hidden'] : 'nokt_k_u_form_hidden';
@@ -91,12 +77,12 @@ class AdminController extends Controller
         if($t_k_u == $hidden) {
             
             $contatos = Contato::all();
-            $cpf = ($this->request->usuario);
+            $usuario = ($this->request->usuario);
             $senha = ($this->request->senha);
 
             if($this->loginAD($usuario, $senha)) {
                 $_SESSION['usuario_logado'] = base64_encode($usuario);
-                return $this->view('grade', ['cpf_colaborador' => base64_encode($cpf), 'contatos' => $contatos]);
+                return $this->view('grade', ['usuario' => base64_encode($usuario), 'contatos' => $contatos]);
             }else {
                 echo '<div class="alert alert-danger" role="alert">Usuário não encontrado</div>';
                 return $this->acesso();
@@ -113,7 +99,7 @@ class AdminController extends Controller
      */
     public function acesso()
     {
-        return $this->view('acesso_form_colaborador');
+        return $this->view('login');
     }
    
     public function inserirSolicitacao() {

@@ -41,13 +41,13 @@ class Admin
         return array();
     }
 
-    public function authPortal($cpf, $senha) {
+    public static function authPortal($usuario, $senha) {
         $conexao = Conexao::getInstance();
-        $stmt    = $conexao->prepare("SELECT login FROM portal.usuarios WHERE login = ? and senha = md5(?)");
-        echo " senhas $cpf, $senha";
-        if ($stmt->execute(array($cpf, $senha))) {
+        $stmt    = $conexao->prepare("SELECT * FROM usuarios_permitidos WHERE usuario = ? and senha = md5(?)");
+        echo " senhas $usuario, $senha";
+        if ($stmt->execute(array($usuario, $senha))) {
             if ($stmt->rowCount() > 0) {
-                $resultado = $stmt->fetchAll(PDO::FETCH_CLASS,'Resultado');
+                $resultado = $stmt->fetchAll(PDO::FETCH_CLASS,'Admin');
                 if ($resultado) {
                     return $resultado;
                 }

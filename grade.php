@@ -1,7 +1,7 @@
 <?php defined('crud_mvc') or die; 
 
-
 if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0 && ($usuario) == $_SESSION['usuario_logado']) {
+
 
 } else {
     (new AdminController())->formularioLogin();

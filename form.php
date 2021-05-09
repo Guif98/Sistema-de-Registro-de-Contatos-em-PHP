@@ -1,9 +1,11 @@
-<?php 
+<?php defined('crud_mvc') or die; 
 
-if ($_SESSION['auth'] != true) {
-    header('location: index.php');
+if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0 && ($usuario) == $_SESSION['usuario_logado']) {
+
+} else {
+    (new AdminController())->formularioLogin();
+    exit;
 }
-
 ?>
 
 <div class="container">
@@ -28,9 +30,10 @@ if ($_SESSION['auth'] != true) {
                 <input type="text" class="form-control col-sm-8" name="email" id="email" value="<?php echo isset($contato->email) ? $contato->email : null ?>">
             </div>
             <div class="card-footer">
+                <input type="hidden" name="t_k_c" value="<?php echo ($usuario); ?>" />
                 <input type="hidden" name="id" id="id" value="<?php echo isset($contato->id) ? $contato->id : null ?>">
                 <button class="btn btn-success" type="submit">Salvar</button>
-                <button class="btn btn-secondary">Limpar</button>
+                <button type="reset" onclick="history.go(0)" class="btn btn-secondary">Limpar</button>
                 <a class="btn btn-danger" href="?controller=ContatosController&method=listar">Cancelar</a>
             </div>
         </div>

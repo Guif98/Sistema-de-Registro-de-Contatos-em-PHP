@@ -1,3 +1,6 @@
+<?php defined('crud_mvc') or die; ?>
+
+
 <?php
 
 class Request {

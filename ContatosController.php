@@ -1,25 +1,44 @@
+<?php defined('crud_mvc') or die; ?>
+
+
 <?php
 
 class ContatosController extends Controller {
 
     /** Envia todos os contatos para a view */
     public function listar() {
+        if($_SESSION['usuario_logado'] == '')
+        return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);     
+
         $contatos = Contato::all();
-        return $this->view('grade', ['contatos' => $contatos]);
+        $usuario = base64_decode($_SESSION['usuario_logado']);
+        return $this->view('grade', ['contatos' => $contatos, 'usuario' => $usuario]);
     }
 
     public function criar() {
-        return $this->view('form');
+        if($_SESSION['usuario_logado'] == '')
+            return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);     
+
+
+        $usuario = base64_decode($_SESSION['usuario_logado']);
+        print_r($usuario);
+        return $this->view('form', ['usuario' => base64_encode($usuario)]);
     }
 
     public function editar($dados) {
+
         $id = (int) $dados['id'];
         $contato = Contato::find($id);
 
-        return $this->view('form', ['contato' => $contato]);
+        $usuario = base64_decode($_SESSION['usuario_logado']);
+        return $this->view('form', ['contato' => $contato, 'usuario' => base64_encode($usuario)]);
     }
 
     public function salvar() {
+        if($_SESSION['usuario_logado'] == '')
+        return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);     
+
+
         $contato = new Contato;
         $contato->nome = $this->request->nome;
         $contato->telefone = $this->request->telefone;
@@ -30,6 +49,10 @@ class ContatosController extends Controller {
     }
 
     public function atualizar($dados) {
+        if($_SESSION['usuario_logado'] == '')
+        return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);     
+
+
         $id = (int) $dados['id'];
         $contato = Contato::find($id);
         $contato->nome = $this->request->nome;
@@ -40,6 +63,10 @@ class ContatosController extends Controller {
     }
 
     public function excluir($dados) {
+        if($_SESSION['usuario_logado'] == '')
+        return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);     
+
+
         $id = (int) $dados['id'];
         $contato = Contato::destroy($id);
         return $this->listar();
