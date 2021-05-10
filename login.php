@@ -1,5 +1,5 @@
 <?php defined('crud_mvc') or die; 
-
+    unset($_SESSION['usuario_logado']);
 ?>
 
 <div class="alert alert-dark" role="alert">

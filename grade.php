@@ -30,7 +30,7 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
                         <td><?=$contato->telefone ?></td>
                         <td><?=$contato->email ?></td>
                         <td><a href="?controller=ContatosController&method=editar&id=<?=$contato->id?>" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="?controller=ContatosController&method=excluir&id=<?=$contato->id?>" class="btn btn-danger btn-sm">Excluir</a>
+                            <a onclick="return confirm('Deseja realmente excluir?')" href="?controller=ContatosController&method=excluir&id=<?=$contato->id?>" class="btn btn-danger btn-sm">Excluir</a>
                         </td>
                     </tr>
                 <?php } 
@@ -40,3 +40,8 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
         </tbody>
     </table>
 </div>
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
