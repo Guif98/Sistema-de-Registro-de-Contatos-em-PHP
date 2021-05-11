@@ -44,7 +44,7 @@ class Admin
     public static function authPortal($usuario, $senha) {
         $conexao = Conexao::getInstance();
         $stmt    = $conexao->prepare("SELECT * FROM usuarios_permitidos WHERE usuario = ? and senha = md5(?)");
-        echo " senhas $usuario, $senha";
+        
         if ($stmt->execute(array($usuario, $senha))) {
             if ($stmt->rowCount() > 0) {
                 $resultado = $stmt->fetchAll(PDO::FETCH_CLASS,'Admin');

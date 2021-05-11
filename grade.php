@@ -8,9 +8,13 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
     exit;
 }
 ?>
+<div class="d-flex">
+<h1 class="flex-grow-1 p-2">Contatos</h1>
+<a class="p-4" href="?controller=AdminController&method=sair">
+    <button class="btn btn-danger">Sair</button>
+</a>
 
-<h1>Contatos</h1>
-<a href="?controller=AdminController&method=sair" class="btn btn-danger">Sair</a>
+</div>
 <hr>
 <div class="container">
     <table class="table table-bordered table-striped" style="top: 40px">
