@@ -18,18 +18,18 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
 <hr>
 <div class="container">
 
-
-    <div id="mensagem_box" class="alert alert-<?php echo isset($msg_type) ? $msg_type : '' ?> mx-auto" role="alert">
-        <h1> <?php if (isset($msg)) {  echo $msg; } else {}?></h1>
-    </div>
-
+    <?php if (isset($msg) && strlen($msg) > 0) { ?>
+        <div id="mensagem_box" class="alert alert-<?php echo isset($msg_type) ? $msg_type : '' ?> mx-auto" role="alert">
+            <h1> <?php if (isset($msg)) {  echo $msg; } else {}?></h1>
+        </div>
+    <?php } ?>
     <table class="table table-secondary table-bordered table-striped" style="top: 40px">
         <thead>
             <th>NOME</th>
             <th>TELEFONE</th>
             <th>E-MAIL</th>
             <th>ANEXO</th>
-            <th><a href="?controller=ContatosController&method=criar" class="btn btn-success btn-sm">Novo</a></th>
+            <th colspan="3"><a href="?controller=ContatosController&method=criar" class="btn btn-success btn-sm">Novo</a></th>
         </thead>
         <tbody class="bg-light text-dark">
             <?php

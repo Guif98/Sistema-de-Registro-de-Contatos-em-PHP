@@ -7,7 +7,7 @@ class ContatosController extends Controller {
 
     /** Envia todos os contatos para a view */
     public function listar() {
-        if(!isset($_SESSION) || $_SESSION['usuario_logado'] == '')
+        if(!isset($_SESSION['usuario_logado']) || $_SESSION['usuario_logado'] == '')
         return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);     
 
         $contatos = Contato::all();
