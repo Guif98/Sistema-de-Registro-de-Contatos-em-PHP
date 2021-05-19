@@ -22,18 +22,27 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
             <th>Nome</th>
             <th>Telefone</th>
             <th>Email</th>
+            <th>Anexo</th>
             <th><a href="?controller=ContatosController&method=criar" class="btn btn-success btn-sm">Novo</a></th>
         </thead>
         <tbody>
             <?php
                 if ($contatos) {
-                    foreach ($contatos as $contato) { 
+                    foreach ($contatos as $contato) {
+                        $anexo = Anexo::find($contato->id);
                 ?>
                     <tr>
                         <td><?=$contato->nome ?></td>
                         <td><?=$contato->telefone ?></td>
                         <td><?=$contato->email ?></td>
+                        <?php if (isset($anexo->caminho) && strlen($anexo->caminho) > 0) { ?>
+                        <td><a href="<?php echo $anexo->caminho ?>" download="<?=$anexo->caminho?>"><?=$anexo->caminho?></a></td>
+                        <?php } else { ?>
+                        <td>Não possui anexo</td>
+                        <?php } ?>
+
                         <td><a href="?controller=ContatosController&method=editar&id=<?=$contato->id?>" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="?controller=AnexoController&method=anexar&id=<?=$contato->id?>" class="btn btn-secondary btn-sm">Anexar</a>
                             <a onclick="return confirm('Deseja realmente excluir?')" href="?controller=ContatosController&method=excluir&id=<?=$contato->id?>" class="btn btn-danger btn-sm">Excluir</a>
                         </td>
                     </tr>

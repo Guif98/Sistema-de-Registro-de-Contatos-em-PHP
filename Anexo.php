@@ -70,4 +70,20 @@ class Anexo {
             return 'NULL';
         }
     }
+
+    public static function find($id) {
+        $conexao = Conexao::getInstance();
+        $stmt = $conexao->prepare("SELECT * FROM anexo WHERE contato_id='{$id}';");
+
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() > 0) {
+                $anexo = $stmt->fetchObject('Anexo'); 
+                if ($anexo) {
+                    return $anexo;
+                }
+            }
+        }
+        
+        return false;
+    }
 }

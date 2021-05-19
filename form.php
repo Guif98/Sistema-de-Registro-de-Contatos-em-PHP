@@ -9,7 +9,7 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
 ?>
 
 <div class="container">
-    <form action="?controller=ContatosController&<?php echo isset($contato->id) ? "method=atualizar&id={$contato->id}": "method=salvar";?>" enctype="multipart/form-data" method="post">
+    <form action="?controller=ContatosController&<?php echo isset($contato->id) ? "method=atualizar&id={$contato->id}": "method=salvar";?>" method="post">
     <?php
         $rand=rand();
         $_SESSION['rand']=$rand;
@@ -33,10 +33,6 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
             <div class="form-group form-row">
                 <label for="email" class="col-sm-2 col-form-label text-right">E-mail:</label>
                 <input type="text" required class="form-control col-sm-8" name="email" id="email" value="<?php echo isset($contato->email) ? $contato->email : null ?>">
-            </div>
-            <div class="form-group form-row">
-                <label for="arquivo" class="col-sm-2 col-form-label text-right">Anexo:</label>
-                <input type="file" required class="form-control col-sm-8" name="arquivo" id="arquivo" value="<?php echo isset($contato->arquivo) ? $contato->arquivo : null ?>">
             </div>
 
             <div class="card-footer">
