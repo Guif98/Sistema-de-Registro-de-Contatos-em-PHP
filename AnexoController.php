@@ -19,25 +19,38 @@ class AnexoController extends Controller {
         if($_SESSION['usuario_logado'] == '')
             return $this->view('erro', ['msg' => 'Erro, a origem do envio do dado não confere!']);
 
-        $path = "anexos/";
-        $arquivo = $path . basename($_FILES["anexo"]["name"]);
+            $usuario = base64_decode($_SESSION['usuario_logado']);
+            $contatos = Contato::all();
 
-        $anexo = new Anexo;
+        if (isset($_FILES["anexo"])) {
+            $path = "anexos/";
+            $arquivo = $path . basename($_FILES["anexo"]["name"]);
 
-        $anexo->caminho = $arquivo;
-        $anexo->uploaded_on = date('Ymd');
-        $anexo->contato_id = $this->request->contato_id;
+            if (file_exists($arquivo)) {
+                return $this->view('erro', ['msg' => 'Desculpe, mas o arquivo já existe!']);
+            }
 
-        if (file_exists($arquivo)) {
-            return $this->view('erro', ['msg' => 'Desculpe, mas o arquivo já existe!']);
+            $anexo = new Anexo;
+            
+            if ($anexo->find($this->request->contato_id)) {
+                return $this->view('grade', ['usuario' => base64_encode($usuario), 'contatos' => $contatos, 'msg' => 'O contato já possui anexo!', 'msg_type' => 'danger']);
+            }
+
+            $anexo->caminho = $arquivo;
+            $anexo->uploaded_on = date('Ymd');
+            $anexo->contato_id = $this->request->contato_id;
+
+          
+
+            if (move_uploaded_file($_FILES["anexo"]["tmp_name"], $arquivo)) {
+                if ($anexo->save()) {
+                    return $this->view('grade', ['usuario' => base64_encode($usuario), 'contatos' => $contatos, 'msg' => 'Arquivo salvo com sucesso', 'msg_type' => 'success']);
+                }
+            } else {
+                return $this->view('erro', ['msg' => 'Desculpe, não foi possível salvar o arquivo!']) ;
+            }
         }
-
-        if (move_uploaded_file($_FILES["anexo"]["tmp_name"], $arquivo)) {
-            echo "O arquivo " . htmlspecialchars(basename($_FILES["anexo"]["name"])) . " foi salvado!";
-            $anexo->save();
-        } else {
-            echo "Desculpe, não foi possível salvar o arquivo!";
-        }
+        return $this->view('grade', ['usuario' => base64_encode($usuario), 'contatos' => $contatos, 'msg' => 'Desculpe, não foi possível salvar o arquivo!', 'msg_type' => 'danger']);
     }
 
 

@@ -17,6 +17,12 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
 </div>
 <hr>
 <div class="container">
+
+
+    <div class="alert alert-<?php echo isset($msg_type) ? $msg_type : '' ?> mx-auto" role="alert">
+        <h1> <?php if (isset($msg)) {  echo $msg; } else {}?></h1>
+    </div>
+
     <table class="table table-bordered table-striped" style="top: 40px">
         <thead>
             <th>Nome</th>
