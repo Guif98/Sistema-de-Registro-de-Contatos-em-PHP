@@ -83,7 +83,32 @@ class Anexo {
                 }
             }
         }
-        
+
+        return false;
+    }
+
+    public static function findUnlink($id) {
+        $conexao = Conexao::getInstance();
+        $stmt = $conexao->prepare("SELECT * FROM anexo WHERE id='{$id}';");
+
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() > 0) {
+                $anexo = $stmt->fetchObject('Anexo'); 
+                if ($anexo) {
+                    return $anexo;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static function destroy($id) {
+        $conexao = Conexao::getInstance();
+        if ($conexao->exec("DELETE FROM anexo WHERE id='{$id}';")) {
+            return true;
+        }
+
         return false;
     }
 }

@@ -42,7 +42,7 @@ if(isset($_SESSION['usuario_logado']) && strlen($_SESSION['usuario_logado']) > 0
                         <td><?=$contato->telefone ?></td>
                         <td><?=$contato->email ?></td>
                         <?php if (isset($anexo->caminho) && strlen($anexo->caminho) > 0) { ?>
-                        <td><a href="<?php echo $anexo->caminho ?>" download="<?=$anexo->caminho?>"><?=$anexo->caminho?></a></td>
+                        <td><a href="<?php echo $anexo->caminho ?>" download="<?=$anexo->caminho?>"><?=$anexo->caminho?></a> <a onclick="return confirm('Deseja realmente excluir o anexo?')" href="?controller=AnexoController&method=excluir&id=<?=$anexo->id?>" type="button" class="btn btn-danger btn-sm float-right  text-light">X</a> </td>
                         <?php } else { ?>
                         <td>Não possui anexo</td>
                         <?php } ?>
