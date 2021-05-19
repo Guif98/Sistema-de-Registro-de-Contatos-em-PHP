@@ -65,8 +65,9 @@ class AnexoController extends Controller {
 
         $anexoUnlink = Anexo::findUnlink($id);
 
-        unlink($anexoUnlink->caminho);
-
+        if (isset($anexoUnlink->caminho)) {
+            unlink($anexoUnlink->caminho);    
+        }
 
         $anexo = Anexo::destroy($id);
         return $this->view('grade', ['usuario' => base64_encode($usuario), 'contatos' => $contatos]);
